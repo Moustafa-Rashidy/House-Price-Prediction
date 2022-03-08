@@ -14,15 +14,22 @@ def home():
 def page():
     if request.method == 'POST':
         try:
-            CRIM = float(request.form['CRIM'])
             ZN = float(request.form['ZN'])
+            INDUS = float(request.form['INDUS'])
             CHAS = float(request.form['CHAS'])
+            NOX = float(request.form['NOX'])
+            RM = float(request.form['RM'])
+            AGE = float(request.form['AGE'])
+            DIS = float(request.form['DIS'])
+            PTRATIO = float(request.form['PTRATIO'])
+            B = float(request.form['B'])
             LSTAT = float(request.form['LSTAT'])
+
             # load file
-            filename = 'final_model.pickle'
+            filename = 'Boston_model.pickle'
             load_file = joblib.load(open(filename, 'rb'))
 
-            Prediction = load_file.predict([[CRIM, ZN, CHAS, LSTAT]])
+            Prediction = load_file.predict([[ZN,INDUS,CHAS,NOX,RM,AGE,DIS,PTRATIO,B,LSTAT]])
 
             return render_template('results.html',Prediction=Prediction[0].round(2))
         except Exception as e:
